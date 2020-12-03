@@ -17,7 +17,7 @@ namespace LearNN {
 		*	Some of them need to be overridden, look at the comments.
 		*/
 
-		// Setup
+		/* Setup */
 
 		protected:
 
@@ -30,7 +30,7 @@ namespace LearNN {
 		virtual const bool CheckSetup() const;
 		virtual const bool Setup(const int inputSize) = 0;
 
-		// Output
+		/* Output */
 
 		protected:
 
@@ -43,7 +43,7 @@ namespace LearNN {
 		virtual const int GetOutputSize() const;
 		virtual const OutputVector& CalculateOutput(const InputVector& input) = 0;
 
-		// Weights
+		/* Weights */
 
 		protected:
 
@@ -57,7 +57,7 @@ namespace LearNN {
 		virtual const NumericalVector CalculateWeightsGradient(const NumericalVector& input, const NumericalVector& derivedValues);
 		virtual const NumericalVector CalculateDerivativeDependencies(const NumericalVector& input, const NumericalVector& derivedValues) = 0;
 
-		// Utils
+		/* Utils */
 
 		virtual std::string toString() const;
 
