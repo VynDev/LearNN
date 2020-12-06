@@ -1,22 +1,17 @@
-/*
- * Author: Vyn
- * Created: 2020-07-21 12:40
- * Modified: 2020-07-28 04:22
- */
-
 #pragma once
-#include "../TrainingAlgorithm.h"
 
 namespace LearNN {
 
     class NeuralNetwork;
 
-	class GradientDescent : public TrainingAlgorithm {
+	template<class CostFunction>
+	class GradientDescent {
 
 		public:
 
-        virtual void Train(NeuralNetwork& neuralNet, Vector<NumericalVector> inputs, Vector<NumericalVector> expectedOutputs, CostFunction& costFunction);
-
-		void LearningStep(NeuralNetwork& neuralNet, const InputVector& input, const OutputVector& expectedOutput, CostFunction& costFunction);
+		void LearningStep(NeuralNetwork& neuralNet, const Input& input, const Output& expectedOutput);
+        void Train(NeuralNetwork& neuralNet, std::vector<Input> inputs, std::vector<Output> expectedOutputs);
 	};
 }
+
+#include "GradientDescent.tpp"

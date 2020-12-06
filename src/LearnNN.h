@@ -13,11 +13,8 @@
 #include "Layer.h"
 #include "Layers/DenseLayer.h"
 
-#include "ActivationFunction.h"
 #include "ActivationFunctions/Sigmoid.h"
 
-#include "CostFunction.h"
 #include "CostFunctions/MeanSquaredError.h"
 
-#include "TrainingAlgorithm.h"
 #include "TrainingAlgorithms/GradientDescent.h"

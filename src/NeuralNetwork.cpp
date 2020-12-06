@@ -4,7 +4,6 @@
  * Modified: 2020-07-28 06:07
  */
 #include "NeuralNetwork.h"
-#include "CostFunction.h"
 #include "Layer.h"
 
 LOGGER("NeuralNetwork")
@@ -19,31 +18,21 @@ namespace LearNN {
 		}
 	}
 
-	NeuralNetwork::NeuralNetwork(NeuralNetwork &neuralNet) {
-		*this = neuralNet;
-	}
-
-	/* Layer */
-
-	void NeuralNetwork::AddLayer(Layer *layer) {
-		if (layers.Size() == 0)
-			layer->Setup(inputSize);
-		else
-			layer->Setup(layers[layers.Size() - 1]->GetOutputSize());
+	void NeuralNetwork::AddLayer(std::unique_ptr<Layer> layer) {
+		layer->Setup(GetLastLayer() ? GetLastLayer()->GetOutputSize() : inputSize);
 
 		if (!layer->CheckSetup()) {
 			PrintSuccess() << "Layer CheckSetup failed (" << layer->GetType() << ")" << std::endl;
 			return ;
 		}
 		
-		layers.push_back(layer);
-		//PrintSuccess() << "Successfully added a layer (" << layer->GetType() << ")" << std::endl;
+		layers.push_back(std::move(layer));
 	}
 
-	const OutputVector& NeuralNetwork::CalculateOutput(const InputVector& input) {
+	const Output& NeuralNetwork::CalculateOutput(const Input& input) {
 		this->input = input;
-		OutputVector const *lastOutput = &input;
-		for (int i = 0; i < layers.Size(); ++i) {
+		Output const *lastOutput = &input;
+		for (int i = 0; i < layers.size(); ++i) {
 			Layer& layer = *(layers[i]);
 			lastOutput = &(layer.CalculateOutput(*lastOutput));
 		}
@@ -53,9 +42,9 @@ namespace LearNN {
 
 	void NeuralNetwork::Describe() const {
 		std::cout << "Input size: " << inputSize;
-		std::cout << "\nOutput size: " << layers[layers.Size() - 1]->GetOutputSize();
-		std::cout << "\nLayer count: " << layers.Size() << "\n";
-		for (int i = 0; i < layers.Size(); ++i) {
+		std::cout << "\nOutput size: " << layers[layers.size() - 1]->GetOutputSize();
+		std::cout << "\nLayer count: " << layers.size() << "\n";
+		for (int i = 0; i < layers.size(); ++i) {
 			if (i != 0)
 				std::cout << "\n----\n";
 			std::cout << layers[i]->toString();
@@ -63,7 +52,11 @@ namespace LearNN {
 		std::cout << std::endl;
 	}
 
-	Vector<Layer *>& NeuralNetwork::GetLayersPointer() {
+	std::vector<std::unique_ptr<Layer>>& NeuralNetwork::GetLayersPointer() {
 		return layers;
+	}
+
+	Layer *NeuralNetwork::GetLastLayer() const {
+		return layers.size() > 0 ? layers[layers.size() - 1].get() : nullptr;
 	}
 }

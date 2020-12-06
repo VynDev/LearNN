@@ -1,9 +1,3 @@
-/*
- * Author: Vyn
- * Created: 2020-07-21 12:40
- * Modified: 2020-07-28 04:09
- */
-
 #pragma once
 #include "../Layer.h"
 
@@ -32,8 +26,6 @@ namespace LearNN {
 
 		private:
 
-		ActivationFunction *activationFunction = nullptr;
-
 		/* Input */
 
 		int inputSize;
@@ -42,12 +34,12 @@ namespace LearNN {
 
 		private:
 
-		NumericalVector rawOutput;
+		Output rawOutput;
 		int neuronCount;
 
 		public:
 
-		virtual const OutputVector& CalculateOutput(const InputVector& input);
+		virtual const Output& CalculateOutput(const Input& input);
 
 		const double GetNeuronValue(int neuronIndex) const;
 		const double GetRawNeuronValue(int neuronIndex) const;
@@ -62,8 +54,8 @@ namespace LearNN {
 
 		public:
 
-		virtual const NumericalVector CalculateWeightsGradient(const NumericalVector& input, const NumericalVector& derivedValues);
-		virtual const NumericalVector CalculateDerivativeDependencies(const NumericalVector& input, const NumericalVector& derivedValues);
+		virtual const Weights CalculateWeightsGradient(const Input& input, const Output& derivedValues);
+		virtual const Weights CalculateDerivativeDependencies(const Input& input, const Output& derivedValues);
 		const double GetWeight(int neuronIndex, int weightIndex) const;
 		void SetWeight(int neuronIndex, int weightIndex, double newWeightValue);
 

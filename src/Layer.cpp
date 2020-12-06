@@ -13,7 +13,7 @@ namespace LearNN {
 
 	// Output
 
-	const OutputVector&	Layer::GetOutput() const {
+	const Output&	Layer::GetOutput() const {
 		return (output);
 	}
 
@@ -29,19 +29,19 @@ namespace LearNN {
 
 	// Weights
 
-	NumericalVector& Layer::GetWeights() {
+	Weights& Layer::GetWeights() {
 		return weights;
 	}
 
-	NumericalVector& Layer::GetWeightsPointer() {
+	Weights& Layer::GetWeightsPointer() {
 		return weights;
 	}
 
-	void Layer::SetWeights(const NumericalVector &newWeights) {
+	void Layer::SetWeights(const Weights &newWeights) {
 		weights = newWeights;
 	}
 
-	const NumericalVector Layer::CalculateWeightsGradient(const NumericalVector& input, const NumericalVector& derivedValues) {
+	const Weights Layer::CalculateWeightsGradient(const Input& input, const Weights& derivedValues) {
 		throw MissingImplementationException(GetType());
 	}
 

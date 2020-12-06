@@ -1,37 +1,34 @@
-/*
- * Author: Vyn
- * Created: 2020-07-21 12:40
- * Modified: 2020-07-28 04:22
- */
-
 #pragma once
 #include <vector>
+#include <memory>
 #include "Logger.h"
 #include "Layers/DenseLayer.h"
 
 namespace LearNN {
-
-	class CostFunction;
-	class Layer;
 
 	class NeuralNetwork {
 
 		public:
 		
 		NeuralNetwork(int inputSize);
-		NeuralNetwork(NeuralNetwork &neuralNet);
 
 		/**
 		 *	Use this function to get a VECTOR of POINTERS to LAYERS, it's a direct access, not a copy.
 		 *	@return The vector that contains all the layers.
-		*/
-		Vector<Layer *>& GetLayersPointer();
+		 */
+		std::vector<std::unique_ptr<Layer>> &GetLayersPointer();
+
+		/**
+		 *	Returns a pointer to the last layer.
+		 *	@return The pointer to the last layer or nullptr if there is no layer.
+		 */
+		Layer *GetLastLayer() const;
 
 		/** 
 		 * 	Add a dense layer to the end of the neural network, it's basically an helper function for AddLayer.  
 		 *	You need to specify the activation function of the neurons as the first template parameter.  
 		 *	@param neuronCount The number of neuron in this layer.
-		*/
+		 */
 		template<class ActivationFunction>
 		void AddDenseLayer(int neuronCount);
 
@@ -41,27 +38,26 @@ namespace LearNN {
 		 *	You need to specify the cost function as the second template parameter.
 		 *	@param inputs The inputs to train on.
 		 *	@param expectedOutputs The expectedOutput with respect to the inputs
-		*/
-		template<class TrainingMethod, class CostFunction>
-		void Train(const Vector<InputVector> &inputs, const Vector<InputVector> &expectedOutputs);
+		 */
+		template<class TrainingMethod>
+		void Train(const std::vector<Input> &inputs, const std::vector<Output> &expectedOutputs);
 
 		/** 
 		 * 	Given an input, calculate the output.    
 		 *	@param inputs The inputs to train on.
 		 *	@return A vector as the output.
 		*/
-		const OutputVector& CalculateOutput(const InputVector& input);
+		const Output &CalculateOutput(const Input& input);
 
 		void Describe() const;
 
 		private:
 
-		void AddLayer(Layer *layer);
+		void AddLayer(std::unique_ptr<Layer> layer);
 
 		int inputSize;
-		InputVector input;
-
-		Vector<Layer *> layers;
+		Input input;
+		std::vector<std::unique_ptr<Layer>> layers;
 	};
 }
 

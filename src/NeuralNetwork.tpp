@@ -5,14 +5,12 @@ namespace LearNN {
 
     template<class T>
     void NeuralNetwork::AddDenseLayer(int neuronCount) {
-        AddLayer(new DenseLayer<T>(neuronCount));
+        AddLayer(std::make_unique<DenseLayer<T>>(neuronCount));
     }
 
-    template<class TrainingMethod, class CostFunction>
-    void NeuralNetwork::Train(const Vector<InputVector> &inputs, const Vector<InputVector> &expectedOutputs) {
+    template<class TrainingMethod>
+    void NeuralNetwork::Train(const std::vector<Input> &inputs, const std::vector<Output> &expectedOutputs) {
         TrainingMethod trainingMethod;
-        CostFunction costFunction;
-        trainingMethod.Train(*this, inputs, expectedOutputs, costFunction);
+        trainingMethod.Train(*this, inputs, expectedOutputs);
     }
-
 }

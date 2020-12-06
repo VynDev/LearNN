@@ -12,11 +12,11 @@ int main()
 	neuralNet.AddDenseLayer<Sigmoid>(2);
 	neuralNet.AddDenseLayer<Sigmoid>(1);
 
-	const Vector<InputVector> inputs =			{{0, 0}, {0, 1}, {1, 0}, {1, 1}};
-	const Vector<InputVector> expectedOutputs = {{0},	 {1},    {1},	 {0}};
+	const std::vector<Input> inputs =			{{0, 0}, {0, 1}, {1, 0}, {1, 1}};
+	const std::vector<Input> expectedOutputs = {{0},	 {1},    {1},	 {0}};
 
 	auto startTime = chrono::high_resolution_clock::now();
-	neuralNet.Train<GradientDescent, MeanSquaredError>(inputs, expectedOutputs);
+	neuralNet.Train<GradientDescent<MeanSquaredError>>(inputs, expectedOutputs);
 	auto endTime = chrono::high_resolution_clock::now();
 
 	cout << "Training took " << (float)chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count() / 1000 << " second(s)." << endl;

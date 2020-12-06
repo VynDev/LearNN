@@ -1,11 +1,4 @@
-/*
- * Author: Vyn
- * Created: 2020-07-21 02:55
- * Modified: 2020-07-29 12:49
- */
-
 #include "DenseLayer.h"
-#include "../ActivationFunction.h"
 #include "../ActivationFunctions/Sigmoid.h"
 #include <cmath>
 
@@ -16,16 +9,13 @@ namespace LearNN {
 		this->outputSize = neuronCount;
 		this->neuronCount = neuronCount;
 		this->biasCount = 1;
-		this->activationFunction = new ActivationFunctionClass;
-
-		this->activationFunction->Calculate(42);
 	}
 	
 	template <class ActivationFunctionClass>
 	const bool DenseLayer<ActivationFunctionClass>::Setup(const int inputSize) {
 		this->inputSize = inputSize;
 
-		weights.Clear();
+		weights.clear();
 		for (int weightIndex = 0; weightIndex < outputSize * (inputSize + 1); ++weightIndex) {
 			weights.push_back((((2 * (double)rand()) / (double)RAND_MAX) - 1) * sqrt((double)1 / (double)inputSize));
 		}
@@ -33,9 +23,9 @@ namespace LearNN {
 	}
 
 	template <class ActivationFunctionClass>
-	const OutputVector& DenseLayer<ActivationFunctionClass>::CalculateOutput(const InputVector& input) {
-		rawOutput.Clear();
-		output.Clear();
+	const Output& DenseLayer<ActivationFunctionClass>::CalculateOutput(const Input& input) {
+		rawOutput.clear();
+		output.clear();
 
 		for (int outputIndex = 0; outputIndex < outputSize; ++outputIndex) {
 
@@ -44,26 +34,26 @@ namespace LearNN {
 				raw += input[inputIndex] * GetWeight(outputIndex, inputIndex);
 			}
 			raw += 1 * GetWeight(outputIndex, inputSize); // Bias
-			rawOutput.PushBack(raw);
-			double neuronValue = activationFunction->Calculate(raw);
-			output.PushBack(neuronValue);
+			rawOutput.push_back(raw);
+			double neuronValue = ActivationFunctionClass::Calculate(raw);
+			output.push_back(neuronValue);
 		}
 
 		return (output);
 	}
 
 	template <class ActivationFunctionClass>
-	const NumericalVector DenseLayer<ActivationFunctionClass>::CalculateWeightsGradient(const NumericalVector& input, const NumericalVector& derivedValues) {
-		NumericalVector gradients;
+	const Weights DenseLayer<ActivationFunctionClass>::CalculateWeightsGradient(const Input& input, const Weights& derivedValues) {
+		Weights gradients;
 
-		for (int i = 0; i < output.Size(); ++i) {
+		for (int i = 0; i < output.size(); ++i) {
 
-			for (int j = 0; j < input.Size(); ++j) {
-				double value = derivedValues[i] * activationFunction->CalculateDerivative(rawOutput[i]) * input[j];
-				gradients.PushBack(value);
+			for (int j = 0; j < input.size(); ++j) {
+				double value = derivedValues[i] * ActivationFunctionClass::CalculateDerivative(rawOutput[i]) * input[j];
+				gradients.push_back(value);
 			}
-			double value = derivedValues[i] * activationFunction->CalculateDerivative(rawOutput[i]) * 1; // bias
-			gradients.PushBack(value);
+			double value = derivedValues[i] * ActivationFunctionClass::CalculateDerivative(rawOutput[i]) * 1; // bias
+			gradients.push_back(value);
 			
 		}
 
@@ -71,12 +61,12 @@ namespace LearNN {
 	}
 
 	template <class ActivationFunctionClass>
-	const NumericalVector DenseLayer<ActivationFunctionClass>::CalculateDerivativeDependencies(const NumericalVector& input, const NumericalVector& derivedValues) {
-		NumericalVector derivatives(input.Size(), 0);
+	const Weights DenseLayer<ActivationFunctionClass>::CalculateDerivativeDependencies(const Input& input, const Weights& derivedValues) {
+		Weights derivatives(input.size(), 0);
 
-		for (int i = 0; i < input.Size(); ++i) {
+		for (int i = 0; i < input.size(); ++i) {
 			for (int j = 0; j < output.size(); ++j) {
-				derivatives[i] += derivedValues[j] * activationFunction->CalculateDerivative(rawOutput[j]) * GetWeight(j, i);
+				derivatives[i] += derivedValues[j] * ActivationFunctionClass::CalculateDerivative(rawOutput[j]) * GetWeight(j, i);
 			}
 		}
 
@@ -85,7 +75,7 @@ namespace LearNN {
 
 	template <class ActivationFunctionClass>
 	std::string DenseLayer<ActivationFunctionClass>::toString() const {
-		std::string description = "Neuron count: " + std::to_string(neuronCount) + ", weight per neuron " + std::to_string(weights.Size() / neuronCount);
+		std::string description = "Neuron count: " + std::to_string(neuronCount) + ", weight per neuron " + std::to_string(weights.size() / neuronCount);
 		return description;
 	}
 

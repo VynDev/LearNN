@@ -26,6 +26,7 @@ namespace LearNN {
 		public:
 
 		virtual ~Layer() {};
+
 		virtual const std::string GetType();
 		virtual const bool CheckSetup() const;
 		virtual const bool Setup(const int inputSize) = 0;
@@ -35,27 +36,27 @@ namespace LearNN {
 		protected:
 
 		int outputSize; // must be set in child class
-		OutputVector output; // should be used for the output, some functions depend on it, like CalculateOutput and GetOutput
+		Output output; // should be used for the output, some functions depend on it, like CalculateOutput and GetOutput
 
 		public:
 
-		virtual const OutputVector& GetOutput() const;
+		virtual const Output& GetOutput() const;
 		virtual const int GetOutputSize() const;
-		virtual const OutputVector& CalculateOutput(const InputVector& input) = 0;
+		virtual const Output& CalculateOutput(const Input& input) = 0;
 
 		/* Weights */
 
 		protected:
 
-		NumericalVector weights;
+		Weights weights;
 
 		public:
 
-		virtual NumericalVector& GetWeights();
-		virtual NumericalVector& GetWeightsPointer();
-		virtual void SetWeights(const NumericalVector &newWeights);
-		virtual const NumericalVector CalculateWeightsGradient(const NumericalVector& input, const NumericalVector& derivedValues);
-		virtual const NumericalVector CalculateDerivativeDependencies(const NumericalVector& input, const NumericalVector& derivedValues) = 0;
+		virtual Weights& GetWeights();
+		virtual Weights& GetWeightsPointer();
+		virtual void SetWeights(const Weights &newWeights);
+		virtual const Weights CalculateWeightsGradient(const Input& input, const Output& derivedValues);
+		virtual const Weights CalculateDerivativeDependencies(const Input& input, const Output& derivedValues) = 0;
 
 		/* Utils */
 

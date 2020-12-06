@@ -5,29 +5,26 @@
  */
 
 #pragma once
-#include "../CostFunction.h"
 #include "../Vector.h"
 #include <cmath>
 
 namespace LearNN {
 	
-	class MeanSquaredError : public CostFunction {
+	class MeanSquaredError {
 
 		public:
 
-		MeanSquaredError() {};
-
-		virtual double Calculate(OutputVector output, OutputVector expectedOutput) {
+		static double Calculate(Output output, Output expectedOutput) {
 			double total = 0;
 
-			for (int i = 0; i < output.Size(); ++i)
+			for (int i = 0; i < output.size(); ++i)
 				total += std::pow(output[i] - expectedOutput[i], 2);
 				
-			return (total / output.Size());
+			return (total / output.size());
 		}
 
-		virtual double CalculateDerivative(OutputVector output, OutputVector expectedOutput, int withRespectToIndex) {
-			return (1 * (output[withRespectToIndex] - expectedOutput[withRespectToIndex]) / output.Size());
+		static double CalculateDerivative(Output output, Output expectedOutput, int withRespectToIndex) {
+			return (1 * (output[withRespectToIndex] - expectedOutput[withRespectToIndex]) / output.size());
 		}
 
 	};
