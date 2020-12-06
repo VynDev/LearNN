@@ -5,12 +5,13 @@
  */
 #include "NeuralNetwork.h"
 #include "CostFunction.h"
+#include "Layer.h"
 
 LOGGER("NeuralNetwork")
 
 namespace LearNN {
 
-	NeuralNetwork::NeuralNetwork() {
+	NeuralNetwork::NeuralNetwork(int inputSize) : inputSize(inputSize) {
 		static bool isSrandAlreadyCalled = false;
 		if (!isSrandAlreadyCalled) {
 			srand(time(NULL));
@@ -20,11 +21,6 @@ namespace LearNN {
 
 	NeuralNetwork::NeuralNetwork(NeuralNetwork &neuralNet) {
 		*this = neuralNet;
-	}
-
-
-	void NeuralNetwork::SetInputSize(int size) {
-		inputSize = size;
 	}
 
 	/* Layer */

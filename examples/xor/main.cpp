@@ -1,56 +1,30 @@
 #include <iostream>
+#include <chrono>
 #include "../../src/LearnNN.h"
 
 using namespace std;
 using namespace LearNN;
 
-LOGGER("Xor example")
-
 int main()
 {
-	PrintDebug() << "Starting Xor example" << endl;
+	NeuralNetwork neuralNet(2);
 
-	NeuralNetwork neuralNet;
-	MeanSquaredError meanSquaredError;
-
-	neuralNet.SetInputSize(2);
-	neuralNet.AddLayer(new DenseLayer<Sigmoid>(2)); 
-	neuralNet.AddLayer(new DenseLayer<Sigmoid>(1));
-
-	//neuralNet.AddDenseLayer<Sigmoid>(2); // <= expected form
-
-	const Vector<InputVector> inputs =			{{0, 0}, {0, 1}, {1, 0}, {1, 1}};
-	const Vector<InputVector> expectedOutputs = {{0},	 {1},    {1},	 {0}};
-
-	GradientDescent gradientDescent;
-	gradientDescent.Train(neuralNet, inputs, expectedOutputs, meanSquaredError);
-
-	//neuralNet.Train<GradientDescent<MeanSquaredError>>(inputs, expectedOutputs); // <= expected form
-
-    std::cout << neuralNet.CalculateOutput(inputs[0])[0] << std::endl;
-    std::cout << neuralNet.CalculateOutput(inputs[1])[0] << std::endl;
-    std::cout << neuralNet.CalculateOutput(inputs[2])[0] << std::endl;
-    std::cout << neuralNet.CalculateOutput(inputs[3])[0] << std::endl;
-
-}
-
-// Expected form below
-
-/*int main()
-{
-	NeuralNetwork neuralNet;
-
-	neuralNet.AddDenseLayer<Sigmoid>(2); 
+	neuralNet.AddDenseLayer<Sigmoid>(2);
 	neuralNet.AddDenseLayer<Sigmoid>(1);
 
 	const Vector<InputVector> inputs =			{{0, 0}, {0, 1}, {1, 0}, {1, 1}};
 	const Vector<InputVector> expectedOutputs = {{0},	 {1},    {1},	 {0}};
 
-	neuralNet.Train<GradientDescent<MeanSquaredError>>(inputs, expectedOutputs); // <= expected form
+	auto startTime = chrono::high_resolution_clock::now();
+	neuralNet.Train<GradientDescent, MeanSquaredError>(inputs, expectedOutputs);
+	auto endTime = chrono::high_resolution_clock::now();
 
-    cout << neuralNet.CalculateOutput(inputs[0])[0] << endl;
-    cout << neuralNet.CalculateOutput(inputs[1])[0] << endl;
-    cout << neuralNet.CalculateOutput(inputs[2])[0] << endl;
-    cout << neuralNet.CalculateOutput(inputs[3])[0] << endl;
+	cout << "Training took " << (float)chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count() / 1000 << " second(s)." << endl;
 
-}*/
+    cout << "0, 0: " << neuralNet.CalculateOutput(inputs[0])[0] << endl;
+    cout << "0, 1: " << neuralNet.CalculateOutput(inputs[1])[0] << endl;
+    cout << "1, 0: " << neuralNet.CalculateOutput(inputs[2])[0] << endl;
+    cout << "1, 1: " << neuralNet.CalculateOutput(inputs[3])[0] << endl;
+
+	return 0;
+}

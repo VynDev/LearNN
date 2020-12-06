@@ -11,19 +11,19 @@ namespace LearNN {
         for (int i = 0; i < 100000; i++) {
 
             const OutputVector& output = neuralNet.CalculateOutput(inputs[0]);
-            PrintSuccess() << output[0] << " (Error: " <<  costFunction.Calculate(output, expectedOutputs[0]) << ")" << std::endl;
+            //PrintSuccess() << output[0] << " (Error: " <<  costFunction.Calculate(output, expectedOutputs[0]) << ")" << std::endl;
             LearningStep(neuralNet, inputs[0], expectedOutputs[0], costFunction);
 
             const OutputVector& output2 = neuralNet.CalculateOutput(inputs[1]);
-            PrintSuccess() << output2[0] << " (Error: " <<  costFunction.Calculate(output2, expectedOutputs[1]) << ")" << std::endl;
+            //PrintSuccess() << output2[0] << " (Error: " <<  costFunction.Calculate(output2, expectedOutputs[1]) << ")" << std::endl;
             LearningStep(neuralNet, inputs[1], expectedOutputs[1], costFunction);
 
             const OutputVector& output3 = neuralNet.CalculateOutput(inputs[2]);
-            PrintSuccess() << output3[0] << " (Error: " <<  costFunction.Calculate(output3, expectedOutputs[2]) << ")" << std::endl;
+            //PrintSuccess() << output3[0] << " (Error: " <<  costFunction.Calculate(output3, expectedOutputs[2]) << ")" << std::endl;
             LearningStep(neuralNet, inputs[2], expectedOutputs[2], costFunction);
 
             const OutputVector& output4 = neuralNet.CalculateOutput(inputs[3]);
-            PrintSuccess() << output4[0] << " (Error: " <<  costFunction.Calculate(output4, expectedOutputs[3])  << ")" << std::endl;
+            //PrintSuccess() << output4[0] << " (Error: " <<  costFunction.Calculate(output4, expectedOutputs[3])  << ")" << std::endl;
             LearningStep(neuralNet, inputs[3], expectedOutputs[3], costFunction);
         }
     }
