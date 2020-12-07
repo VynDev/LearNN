@@ -1,6 +1,6 @@
-#include "../catch.h"
-#include "MeanSquaredError.h"
-#include "../Vector.h"
+#include "catch.h"
+#include "LearNN/CostFunctions/MeanSquaredError.h"
+#include "LearNN/typedef.h"
 
 namespace LearNN {
 

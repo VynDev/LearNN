@@ -5,8 +5,8 @@
  */
 
 #pragma once
+#include "typedef.h"
 #include "Logger.h"
-#include "Vector.h"
 #include "Exception.h"
 #include "NeuralNetwork.h"
 

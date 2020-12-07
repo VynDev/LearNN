@@ -6,7 +6,7 @@
 
 #pragma once
 #include "Logger.h"
-#include "Vector.h"
+#include "typedef.h"
 
 namespace LearNN {
 	

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <chrono>
-#include "../../src/LearnNN.h"
+#include "LearNN/LearnNN.h"
 
 using namespace std;
 using namespace LearNN;

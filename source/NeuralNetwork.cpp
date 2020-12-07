@@ -3,8 +3,8 @@
  * Created: 2020-07-24 06:06
  * Modified: 2020-07-28 06:07
  */
-#include "NeuralNetwork.h"
-#include "Layer.h"
+#include "LearNN/NeuralNetwork.h"
+#include "LearNN/Layer.h"
 
 LOGGER("NeuralNetwork")
 
@@ -32,6 +32,7 @@ namespace LearNN {
 	const Output& NeuralNetwork::CalculateOutput(const Input& input) {
 		this->input = input;
 		Output const *lastOutput = &input;
+		
 		for (int i = 0; i < layers.size(); ++i) {
 			Layer& layer = *(layers[i]);
 			lastOutput = &(layer.CalculateOutput(*lastOutput));

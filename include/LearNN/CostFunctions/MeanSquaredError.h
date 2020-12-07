@@ -5,7 +5,7 @@
  */
 
 #pragma once
-#include "../Vector.h"
+#include "../typedef.h"
 #include <cmath>
 
 namespace LearNN {

@@ -1,5 +1,5 @@
-#include "Layer.h"
-#include "Exception.h"
+#include "LearNN/Layer.h"
+#include "LearNN/Exception.h"
 
 LOGGER("Layer")
 

@@ -1,5 +1,5 @@
-#include "../catch.h"
-#include "Sigmoid.h"
+#include "catch.h"
+#include "LearNN/ActivationFunctions/Sigmoid.h"
 
 
 namespace LearNN {

@@ -49,6 +49,7 @@ namespace LearNN {
 		*/
 		const Output &CalculateOutput(const Input& input);
 
+		/** Print the neural network structure */
 		void Describe() const;
 
 		private:

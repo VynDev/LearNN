@@ -1,6 +1,6 @@
 #include "GradientDescent.h"
 #include "../NeuralNetwork.h"
-#include "../Vector.h"
+#include "../typedef.h"
 
 LOGGER("GD")
 

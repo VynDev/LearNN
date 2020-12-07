@@ -4,8 +4,9 @@ solution "LearNN"
 	project "LearNN"
 		kind "StaticLib"
 		language "C++"
-		files {"src/**.h", "src/**.cpp"}
-		removefiles {"src/**.test.cpp"}
+		includedirs {"include"}
+		files {"source/**.cpp"}
+		removefiles {"source/**.test.cpp"}
 		targetdir "lib"
 
 	configuration "Debug"
@@ -17,13 +18,15 @@ solution "LearNN"
 	project "tests"
 		kind "ConsoleApp"
 		language "C++"
-		files {"src/**.test.cpp", "src/catch.h"}
+		includedirs {"include", "tests"}
+		files {"tests/**.test.cpp", "source/**.test.cpp"}
 		links {"LearNN"}
 		targetdir "bin"
 
 	project "xor"
 		kind "ConsoleApp"
 		language "C++"
+		includedirs {"include"}
 		files {"examples/xor/**.h", "examples/xor/**.cpp"}
 		links {"LearNN"}
 		targetdir "bin"
