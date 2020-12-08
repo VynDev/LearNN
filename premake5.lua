@@ -6,7 +6,7 @@ solution "LearNN"
 		includedirs {"include"}
 		files {"source/**.cpp"}
 		removefiles {"source/**.test.cpp"}
-		targetdir "lib"
+		targetdir "bin"
 
 		configuration "Static"
 			kind "StaticLib"
@@ -37,7 +37,6 @@ newaction {
 		print("cleaning the build...")
 		os.rmdir("./bin")
 		os.rmdir("./obj")
-		os.rmdir("./lib")
 		os.remove("./Makefile")
 		os.remove("./*.make")
 		print("done.")
