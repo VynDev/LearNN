@@ -1,19 +1,18 @@
 solution "LearNN"
-	configurations {"Debug", "Release"}
+	configurations {"Static", "Shared"}
 
 	project "LearNN"
-		kind "StaticLib"
 		language "C++"
 		includedirs {"include"}
 		files {"source/**.cpp"}
 		removefiles {"source/**.test.cpp"}
 		targetdir "lib"
 
-	configuration "Debug"
-		defines {"DEBUG"}
+		configuration "Static"
+			kind "StaticLib"
 
-	configuration "Release"
-		defines {"NDEBUG"}
+		configuration "Shared"
+			kind "SharedLib"
 
 	project "tests"
 		kind "ConsoleApp"
@@ -31,18 +30,11 @@ solution "LearNN"
 		links {"LearNN"}
 		targetdir "bin"
 
-	configuration "Debug"
-		defines {"DEBUG"}
-
-	configuration "Release"
-		defines {"NDEBUG"}
-	
-
 newaction {
 	trigger = "clean",
 	description = "clean the software",
 	execute = function ()
-		print("clean the build...")
+		print("cleaning the build...")
 		os.rmdir("./bin")
 		os.rmdir("./obj")
 		os.rmdir("./lib")

@@ -25,18 +25,16 @@ namespace LearNN {
 			PrintSuccess() << "Layer CheckSetup failed (" << layer->GetType() << ")" << std::endl;
 			return ;
 		}
-		
+
 		layers.push_back(std::move(layer));
 	}
 
 	const Output& NeuralNetwork::CalculateOutput(const Input& input) {
 		this->input = input;
 		Output const *lastOutput = &input;
-		
-		for (int i = 0; i < layers.size(); ++i) {
-			Layer& layer = *(layers[i]);
-			lastOutput = &(layer.CalculateOutput(*lastOutput));
-		}
+
+		for (auto& layer : layers)
+			lastOutput = &(layer->CalculateOutput(*lastOutput));
 
 		return (*lastOutput);
 	}

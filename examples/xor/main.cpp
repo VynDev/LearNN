@@ -13,7 +13,7 @@ int main()
 	neuralNet.AddDenseLayer<Sigmoid>(1);
 
 	const std::vector<Input> inputs =			{{0, 0}, {0, 1}, {1, 0}, {1, 1}};
-	const std::vector<Input> expectedOutputs = {{0},	 {1},    {1},	 {0}};
+	const std::vector<Output> expectedOutputs = {{0},	 {1},    {1},	 {0}};
 
 	auto startTime = chrono::high_resolution_clock::now();
 	neuralNet.Train<GradientDescent<MeanSquaredError>>(inputs, expectedOutputs);

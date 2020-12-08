@@ -1,19 +1,13 @@
 #include "LearNN/Layer.h"
 #include "LearNN/Exception.h"
 
-LOGGER("Layer")
-
 namespace LearNN {
-
-	// Type
 
 	const std::string Layer::GetType() {
 		return type;
 	}
 
-	// Output
-
-	const Output&	Layer::GetOutput() const {
+	const Output& Layer::GetOutput() const {
 		return (output);
 	}
 
@@ -21,13 +15,10 @@ namespace LearNN {
 		return (outputSize);
 	}
 
-	// Setup
 
 	const bool Layer::CheckSetup() const {
 		return true;
 	}
-
-	// Weights
 
 	Weights& Layer::GetWeights() {
 		return weights;
@@ -44,8 +35,6 @@ namespace LearNN {
 	const Weights Layer::CalculateWeightsGradient(const Input& input, const Weights& derivedValues) {
 		throw MissingImplementationException(GetType());
 	}
-
-	// Utils
 
 	std::string Layer::toString() const {
 		std::string description = "Missing description";
