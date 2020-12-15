@@ -42,7 +42,7 @@ int main()
 {
     NeuralNetwork neuralNet(2); // Create a neural network with input of size 2.
 
-    // Create 2 dense layer with 2 and 1 neurons, using the sigmoid functions.
+    // Create 2 dense layers with 2 and 1 neurons, using the sigmoid function.
     neuralNet.AddDenseLayer<Sigmoid>(2);
     neuralNet.AddDenseLayer<Sigmoid>(1);
 

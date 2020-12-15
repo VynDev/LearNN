@@ -4,4 +4,7 @@ obj
 lib
 bin
 premake5
+
 helper_start.sh
+*.json
+Todo.md

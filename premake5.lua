@@ -3,7 +3,8 @@ solution "LearNN"
 
 	project "LearNN"
 		language "C++"
-		includedirs {"include"}
+		cppdialect "C++17"
+		includedirs {"include", "libs/json-parser/include"}
 		files {"source/**.cpp"}
 		removefiles {"source/**.test.cpp"}
 		targetdir "bin"
@@ -17,7 +18,8 @@ solution "LearNN"
 	project "tests"
 		kind "ConsoleApp"
 		language "C++"
-		includedirs {"include", "tests"}
+		cppdialect "C++17"
+		includedirs {"include", "libs/json-parser/include", "tests"}
 		files {"tests/**.test.cpp", "source/**.test.cpp"}
 		links {"LearNN"}
 		targetdir "bin"
@@ -25,8 +27,9 @@ solution "LearNN"
 	project "xor"
 		kind "ConsoleApp"
 		language "C++"
-		includedirs {"include"}
-		files {"examples/xor/**.h", "examples/xor/**.cpp"}
+		cppdialect "C++17"
+		includedirs {"include", "libs/json-parser/include"}
+		files {"examples/xor/**.h", "examples/xor/**.cpp",}
 		links {"LearNN"}
 		targetdir "bin"
 

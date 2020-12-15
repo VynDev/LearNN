@@ -5,6 +5,7 @@
  */
 #include "LearNN/NeuralNetwork.h"
 #include "LearNN/Layer.h"
+#include "json-parser/JSON.h"
 
 LOGGER("NeuralNetwork")
 
@@ -57,5 +58,22 @@ namespace LearNN {
 
 	Layer *NeuralNetwork::GetLastLayer() const {
 		return layers.size() > 0 ? layers[layers.size() - 1].get() : nullptr;
+	}
+
+	void NeuralNetwork::Save(const std::string& filename) const {
+		JSON::Object ez;
+
+		ez.AddField("name", std::string("LearNN"));
+		ez.AddField("version", "0.1.0");
+		auto& jsonLayers = ez.AddArray("layers");
+		for (const auto& layer : layers) {
+			auto& jsonLayer = jsonLayers.AddObject();
+			jsonLayer.AddField("activationFunction", "Sigmoid");
+			auto& jsonWeights = jsonLayer.AddArray("weights");
+			for (auto weight : layer->GetWeights()) {
+				jsonWeights.AddElement(weight);
+			}
+		}
+		ez.Save(filename);
 	}
 }

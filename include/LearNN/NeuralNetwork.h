@@ -49,6 +49,12 @@ namespace LearNN {
 		*/
 		const Output &CalculateOutput(const Input& input);
 
+		/**
+		 *	Save the neural network structure into a .json file
+		 *	@param filename The name of the model
+		 */
+		void Save(const std::string& filename) const;
+
 		/** Print the neural network structure */
 		void Describe() const;
 

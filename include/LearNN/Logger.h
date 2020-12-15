@@ -34,7 +34,7 @@ namespace LearNN
 	const std::string GREEN = "\033[32m";
 	const std::string YELLOW = "\033[33m";
 	const std::string BLUE = "\033[34m";
-	
+
 	class Logger
 	{
 		private:
