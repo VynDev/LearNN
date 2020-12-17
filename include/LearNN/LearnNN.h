@@ -18,3 +18,5 @@
 #include "CostFunctions/MeanSquaredError.h"
 
 #include "TrainingAlgorithms/GradientDescent.h"
+
+#include "Load.h"

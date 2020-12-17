@@ -60,14 +60,19 @@ namespace LearNN {
 		return layers.size() > 0 ? layers[layers.size() - 1].get() : nullptr;
 	}
 
+	Layer *NeuralNetwork::GetFirstLayer() const {
+		return layers.size() > 0 ? layers[0].get() : nullptr;
+	}
+
 	void NeuralNetwork::Save(const std::string& filename) const {
 		JSON::Object ez;
-
-		ez.AddField("name", std::string("LearNN"));
+		ez.AddField("name", "LearNN");
 		ez.AddField("version", "0.1.0");
+		ez.AddField("inputSize", GetInputSize());
 		auto& jsonLayers = ez.AddArray("layers");
 		for (const auto& layer : layers) {
 			auto& jsonLayer = jsonLayers.AddObject();
+			jsonLayer.AddField("size", layer->GetOutputSize());
 			jsonLayer.AddField("activationFunction", "Sigmoid");
 			auto& jsonWeights = jsonLayer.AddArray("weights");
 			for (auto weight : layer->GetWeights()) {

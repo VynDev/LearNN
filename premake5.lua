@@ -1,37 +1,47 @@
-solution "LearNN"
-	configurations {"Static", "Shared"}
+workspace "LearNN"
+	configurations {"Debug", "Release"}
 
 	project "LearNN"
-		language "C++"
-		cppdialect "C++17"
-		includedirs {"include", "libs/json-parser/include"}
-		files {"source/**.cpp"}
-		removefiles {"source/**.test.cpp"}
+		kind "StaticLib"
+		language "C++"; cppdialect "C++17"
 		targetdir "bin"
 
-		configuration "Static"
-			kind "StaticLib"
+		includedirs {"include", "libs/json-parser/include"} -- includes
+		links {"libs/json-parser/bin/json-parser"} -- libraries
 
-		configuration "Shared"
-			kind "SharedLib"
-
-	project "tests"
-		kind "ConsoleApp"
-		language "C++"
-		cppdialect "C++17"
-		includedirs {"include", "libs/json-parser/include", "tests"}
-		files {"tests/**.test.cpp", "source/**.test.cpp"}
-		links {"LearNN"}
-		targetdir "bin"
-
+		files {"source/**.cpp"} -- sources
+		removefiles {"source/**.test.cpp"} -- ignore test source files
+		
+		prebuildcommands {"cd ./libs/json-parser && premake5 gmake && make"} -- Build dependencies
+	
+	filter "configurations:Debug"
+		postbuildcommands {"ar -q bin/libLearNN.a libs/json-parser/obj/Debug/json-parser/*.o"} -- Merge the libraries to not have to link it in other projects
+	
+	filter "configurations:Release"
+		postbuildcommands {"ar -q bin/libLearNN.a libs/json-parser/obj/Debug/json-parser/*.o"} -- Merge the libraries to not have to link it in other projects
+	
 	project "xor"
 		kind "ConsoleApp"
-		language "C++"
-		cppdialect "C++17"
-		includedirs {"include", "libs/json-parser/include"}
-		files {"examples/xor/**.h", "examples/xor/**.cpp",}
-		links {"LearNN"}
+		language "C++"; cppdialect "C++17"
 		targetdir "bin"
+
+		includedirs {"include"}
+		links {"LearNN"}
+
+		files {"examples/xor/**.h", "examples/xor/**.cpp",}
+		
+
+	--[[
+	project "tests"
+		kind "ConsoleApp"
+		language "C++"; cppdialect "C++17"
+		targetdir "bin"
+		
+		includedirs {"include", "tests"}
+		links {"LearNN"}
+
+		files {"tests/**.test.cpp", "source/**.test.cpp"}
+	]]
 
 newaction {
 	trigger = "clean",
@@ -43,5 +53,13 @@ newaction {
 		os.remove("./Makefile")
 		os.remove("./*.make")
 		print("done.")
+	end
+}
+
+newaction {
+	trigger = "tests",
+	description = "run tests",
+	execute = function ()
+		os.execute("./bin/xor")
 	end
 }

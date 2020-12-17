@@ -23,6 +23,7 @@ namespace LearNN {
 		 *	@return The pointer to the last layer or nullptr if there is no layer.
 		 */
 		Layer *GetLastLayer() const;
+		Layer *GetFirstLayer() const;
 
 		/** 
 		 * 	Add a dense layer to the end of the neural network, it's basically an helper function for AddLayer.  
@@ -30,7 +31,7 @@ namespace LearNN {
 		 *	@param neuronCount The number of neuron in this layer.
 		 */
 		template<class ActivationFunction>
-		void AddDenseLayer(int neuronCount);
+		DenseLayer<ActivationFunction>* AddDenseLayer(int neuronCount);
 
 		/** 
 		 * 	Train the neural network.  
@@ -57,6 +58,9 @@ namespace LearNN {
 
 		/** Print the neural network structure */
 		void Describe() const;
+
+		int GetInputSize() const {return inputSize;}
+		void SetInputSize(int value) {inputSize = value;}
 
 		private:
 

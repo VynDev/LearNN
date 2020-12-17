@@ -1,7 +1,6 @@
 #include <iostream>
 #include <chrono>
 #include "LearNN/LearnNN.h"
-#include "json-parser/JSON.h"
 
 using namespace std;
 using namespace LearNN;
@@ -27,8 +26,17 @@ int main()
     cout << "1, 0: " << neuralNet.CalculateOutput(inputs[2])[0] << endl;
     cout << "1, 1: " << neuralNet.CalculateOutput(inputs[3])[0] << endl;
 
-	neuralNet.Describe();
 	neuralNet.Save("xor_model.json");
+
+	NeuralNetwork nn2(2);
+
+	LoadNeuralNetwork("xor_model.json", &nn2);
+
+	cout << "After (re)load" << endl;
+	cout << "0, 0: " << nn2.CalculateOutput(inputs[0])[0] << endl;
+    cout << "0, 1: " << nn2.CalculateOutput(inputs[1])[0] << endl;
+    cout << "1, 0: " << nn2.CalculateOutput(inputs[2])[0] << endl;
+    cout << "1, 1: " << nn2.CalculateOutput(inputs[3])[0] << endl;
 
 	return 0;
 }

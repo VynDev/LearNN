@@ -4,8 +4,9 @@
 namespace LearNN {
 
     template<class T>
-    void NeuralNetwork::AddDenseLayer(int neuronCount) {
+    DenseLayer<T>* NeuralNetwork::AddDenseLayer(int neuronCount) {
         AddLayer(std::make_unique<DenseLayer<T>>(neuronCount));
+        return static_cast<DenseLayer<T>*>(GetLastLayer());
     }
 
     template<class TrainingMethod>
