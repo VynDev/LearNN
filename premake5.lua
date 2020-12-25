@@ -15,10 +15,10 @@ workspace "LearNN"
 		prebuildcommands {"cd ./libs/json-parser && premake5 gmake && make"} -- Build dependencies
 	
 	filter "configurations:Debug"
-		postbuildcommands {"ar -q bin/libLearNN.a libs/json-parser/obj/Debug/json-parser/*.o"} -- Merge the libraries to not have to link it in other projects
+		--postbuildcommands {"ar -q bin/libLearNN.a libs/json-parser/obj/Debug/json-parser/*.o"} -- Merge the libraries to not have to link it in other projects
 	
 	filter "configurations:Release"
-		postbuildcommands {"ar -q bin/libLearNN.a libs/json-parser/obj/Debug/json-parser/*.o"} -- Merge the libraries to not have to link it in other projects
+		--postbuildcommands {"ar -q bin/libLearNN.a libs/json-parser/obj/Debug/json-parser/*.o"} -- Merge the libraries to not have to link it in other projects
 	
 	project "xor"
 		kind "ConsoleApp"
@@ -26,7 +26,7 @@ workspace "LearNN"
 		targetdir "bin"
 
 		includedirs {"include"}
-		links {"LearNN"}
+		links {"LearNN", "libs/json-parser/bin/json-parser"}
 
 		files {"examples/xor/**.h", "examples/xor/**.cpp",}
 		
