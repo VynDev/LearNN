@@ -1,6 +1,8 @@
-This is a neural network library made in C++, i created it to learn about neural networks and data science so it may contains errors and/or not being compatible with you OS/Version
+**In development!**  
+  
+This is a neural network library made in C++, I created it to learn about neural networks and data science so it may contains errors and/or not being compatible with you OS/Version
 
-## Quick examples
+## Quick usage examples
 
 ### Solving XOR gate
 
@@ -24,7 +26,7 @@ int main()
 
     /* Define the inputs and the outputs for the XOR gate. */
     const vector<Input> inputs =           {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
-    const vector<Output> expectedOutputs = {{0},	{1},    {1},	{0}};
+    const vector<Output> expectedOutputs = {{0},    {1},    {1},    {0}};
 
     /* 
     *  Train the neural network with the gradient descent method,
@@ -61,15 +63,21 @@ g++ -I path_to_LearNN/include -L path_to_LearNN/bin -L path_to_LearNN/libs/json-
 
 ### Steps (Linux)
 
+Inside the project root folder:
 ```
+git submodule update --init --recursive
 premake5 gmake
 make
 ```
 
 ## Examples of projects using LearNN
 
+### Fruit Seeker, Snake
+Snakes learning to eat fruit and survive in a small 2D environment using genetic algorithm.  
+Github: https://github.com/VynDev/Fruit-Seeker
+
 ### CarGenAI (using a old version of this lib)
-Cars learning to drive in Unreal Engine 4 using genetic algorithm  
+Cars learning to drive in Unreal Engine 4 using genetic algorithm.  
 Demo: https://youtu.be/aslTSS2VpCA  
 Github: https://github.com/VynDev/CarGenAI
 
