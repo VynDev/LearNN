@@ -1,6 +1,8 @@
 workspace "LearNN"
 	configurations {"Debug", "Release"}
 
+	-- Library
+
 	project "LearNN"
 		kind "StaticLib"
 		language "C++"; cppdialect "C++17"
@@ -13,13 +15,21 @@ workspace "LearNN"
 		removefiles {"source/**.test.cpp"} -- ignore test source files
 		
 		prebuildcommands {"cd ./libs/json-parser && premake5 gmake && make"} -- Build dependencies
-	
-	filter "configurations:Debug"
-		--postbuildcommands {"ar -q bin/libLearNN.a libs/json-parser/obj/Debug/json-parser/*.o"} -- Merge the libraries to not have to link it in other projects
-	
-	filter "configurations:Release"
-		--postbuildcommands {"ar -q bin/libLearNN.a libs/json-parser/obj/Debug/json-parser/*.o"} -- Merge the libraries to not have to link it in other projects
-	
+
+	-- Tests
+
+	project "tests"
+		kind "ConsoleApp"
+		language "C++"; cppdialect "C++17"
+		targetdir "bin"
+
+		includedirs {"include", "tests"}
+		links {"LearNN", "libs/json-parser/bin/json-parser"}
+
+		files {"tests/**.test.cpp", "source/**.test.cpp"}
+
+	-- Examples
+
 	project "xor"
 		kind "ConsoleApp"
 		language "C++"; cppdialect "C++17"
@@ -28,20 +38,9 @@ workspace "LearNN"
 		includedirs {"include"}
 		links {"LearNN", "libs/json-parser/bin/json-parser"}
 
-		files {"examples/xor/**.h", "examples/xor/**.cpp",}
-		
+		files {"examples/xor.cpp"}
 
-	--[[
-	project "tests"
-		kind "ConsoleApp"
-		language "C++"; cppdialect "C++17"
-		targetdir "bin"
-		
-		includedirs {"include", "tests"}
-		links {"LearNN"}
-
-		files {"tests/**.test.cpp", "source/**.test.cpp"}
-	]]
+-- Actions
 
 newaction {
 	trigger = "clean",
@@ -57,9 +56,17 @@ newaction {
 }
 
 newaction {
+	trigger = "examples",
+	description = "Run the examples, for dev testing purpose",
+	execute = function ()
+		os.execute("./bin/xor")
+	end
+}
+
+newaction {
 	trigger = "tests",
 	description = "run tests",
 	execute = function ()
-		os.execute("./bin/xor")
+		os.execute("./bin/tests")
 	end
 }
